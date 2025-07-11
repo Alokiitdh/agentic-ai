@@ -5,6 +5,8 @@ Chunking refers to splitting large documents into smaller pieces (chunks) to pro
 
 LangChain provides multiple strategies to handle chunking intelligently.
 
+Reference Link: [Types of Chunking](https://www.youtube.com/watch?v=pIGRwMjhMaQ)
+
 ---
 
 ## 🔸 Types of Chunking Strategies
