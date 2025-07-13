@@ -66,7 +66,6 @@ It uses modern tools and libraries such as HuggingFace Transformers for embeddin
 *   The session maintains memory via MemorySaver.
     
 
-````markdown
 # 📁 Project Structure: `rag_chatbot_fastapi`
 ---
 
