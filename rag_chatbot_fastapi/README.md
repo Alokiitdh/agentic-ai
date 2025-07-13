@@ -66,8 +66,6 @@ It uses modern tools and libraries such as HuggingFace Transformers for embeddin
 *   The session maintains memory via MemorySaver.
     
 
-Here's your entire content **cleaned up and formatted as Markdown** — perfect for a `README.md` file:
-
 ````markdown
 # 📁 Project Structure: `rag_chatbot_fastapi`
 
@@ -187,14 +185,7 @@ Open your browser and go to:
 
 ```
 http://127.0.0.1:8000/docs
-```
 
----
-
-Let me know if you want to include badges, logo, or deploy instructions (e.g., Render, Railway, Docker, etc.)!
-
-```
-```
 
 
 ✨ Possible Improvements
