@@ -66,70 +66,136 @@ It uses modern tools and libraries such as HuggingFace Transformers for embeddin
 *   The session maintains memory via MemorySaver.
     
 
-📁 Project Structure
---------------------
+Here's your entire content **cleaned up and formatted as Markdown** — perfect for a `README.md` file:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   rag_chatbot_fastapi/  ├── app/  │   ├── main.py             # FastAPI app instance  │   ├── api.py              # Routes for upload_pdf and chat  │   ├── pdf_utils.py        # PDF text extraction logic  │   ├── vector_utils.py     # Text chunking, embedding, FAISS  │   ├── langgraph_flow.py   # LangGraph setup and chatbot creation  ├── uploads/                # Temporary PDF upload folder  ├── requirements.txt        # Python dependencies  ├── README.md               # Project documentation   `
+````markdown
+# 📁 Project Structure: `rag_chatbot_fastapi`
 
-🔑 Tech Stack
--------------
+```bash
+rag_chatbot_fastapi/
+├── app/
+│   ├── main.py             # FastAPI app instance
+│   ├── api.py              # Routes for upload_pdf and chat
+│   ├── pdf_utils.py        # PDF text extraction logic
+│   ├── vector_utils.py     # Text chunking, embedding, FAISS
+│   ├── langgraph_flow.py   # LangGraph setup and chatbot creation
+├── uploads/                # Temporary PDF upload folder
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+````
 
-PurposeLibrary/TechAPI FrameworkFastAPIPDF ParsingPyPDF2Text SplittingRecursiveCharacterTextSplitter (LangChain)EmbeddingsHuggingFace Transformers (all-mpnet-base-v2)Vector StoreFAISSLanguage ModelGroq's LLaMA-3.3-70B via LangGraphMemory TrackingLangGraph MemorySaverSession ManagementFastAPI Cookies
+---
 
-🧪 API Endpoints
-----------------
+# 🔑 Tech Stack
 
-### POST /upload\_pdf/
+| **Purpose**        | **Library / Technology**                       |
+| ------------------ | ---------------------------------------------- |
+| API Framework      | FastAPI                                        |
+| PDF Parsing        | PyPDF2                                         |
+| Text Splitting     | RecursiveCharacterTextSplitter (LangChain)     |
+| Embeddings         | HuggingFace Transformers (`all-mpnet-base-v2`) |
+| Vector Store       | FAISS                                          |
+| Language Model     | Groq's LLaMA-3.3-70B via LangGraph             |
+| Memory Tracking    | LangGraph `MemorySaver`                        |
+| Session Management | FastAPI Cookies                                |
+
+---
+
+# 🧪 API Endpoints
+
+### `POST /upload_pdf/`
 
 Uploads a PDF document and returns a session ID (stored in cookies):
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   curl -X POST -F "file=@resume.pdf" http://localhost:8000/upload_pdf/   `
+```bash
+curl -X POST -F "file=@resume.pdf" http://localhost:8000/upload_pdf/
+```
 
-### POST /chat
+---
+
+### `POST /chat`
 
 Sends a user question to the chatbot:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   POST /chat  {    "message": "What is the objective of this document?"  }   `
+```json
+POST /chat
+{
+  "message": "What is the objective of this document?"
+}
+```
 
-> Note: The session\_id is automatically retrieved from the cookie.
+> 💡 **Note**: The `session_id` is automatically retrieved from the cookie.
 
-🧹 Auto File Cleanup
---------------------
+---
 
-To ensure user privacy and reduce storage usage, uploaded PDF files are **automatically deleted** right after they are embedded and stored in FAISS.
+# 🧹 Auto File Cleanup
 
-🛠️ Setup Instructions
-----------------------
+Uploaded PDF files are **automatically deleted** right after being embedded and stored in FAISS, ensuring privacy and minimizing disk usage.
 
-1.  Clone the repository:
-    
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone https://github.com/yourusername/rag_chatbot_fastapi  cd rag_chatbot_fastapi   `
+# 🛠️ Setup Instructions
 
-1.  Create a virtual environment:
-    
+### 1. Clone the repository
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python -m venv venv  source venv/bin/activate  # or venv\Scripts\activate on Windows   `
+```bash
+git clone https://github.com/yourusername/rag_chatbot_fastapi
+cd rag_chatbot_fastapi
+```
 
-1.  Install the dependencies:
-    
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pip install -r requirements.txt   `
+### 2. Create a virtual environment
 
-1.  Set your Groq API Key:
-    
+```bash
+python -m venv venv
+source venv/bin/activate          # For Linux/macOS
+# OR
+venv\Scripts\activate             # For Windows
+```
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   export GROQ_API_KEY=your_key_here       # For Linux/macOS  set GROQ_API_KEY=your_key_here          # For Windows CMD   `
+---
 
-1.  Run the server:
-    
+### 3. Install the dependencies
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   uvicorn main:app --reload   `
+```bash
+pip install -r requirements.txt
+```
 
-1.  Access Swagger UI at:
-    
+---
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   http://127.0.0.1:8000/docs   `
+### 4. Set your Groq API Key
+
+```bash
+export GROQ_API_KEY=your_key_here       # Linux/macOS
+set GROQ_API_KEY=your_key_here          # Windows CMD
+```
+
+---
+
+### 5. Run the FastAPI server
+
+```bash
+uvicorn main:app --reload
+```
+
+---
+
+### 6. Access the Swagger API Docs
+
+Open your browser and go to:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+---
+
+Let me know if you want to include badges, logo, or deploy instructions (e.g., Render, Railway, Docker, etc.)!
+
+```
+```
+
 
 ✨ Possible Improvements
 -----------------------
