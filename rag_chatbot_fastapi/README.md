@@ -1,213 +1,153 @@
-* * * * *
-
-```
-
-# 🤖 RAG-Based Chatbot with FastAPI, LangGraph & PDF Upload
-
-This project is a **Retrieval-Augmented Generation (RAG) based chatbot** built with **FastAPI**, which allows users to upload any PDF document and then chat with its contents. The system leverages **LangGraph**, **HuggingFace embeddings**, and **FAISS** for powerful document understanding and contextual responses.
-
----
-
-## 🚀 Features
-
-- 📤 Upload **any PDF** file via FastAPI endpoint
-
-- ✂️ **Split** and **chunk** the document content intelligently
-
-- 🧠 **Embed** content using HuggingFace Transformers
-
-- 🔍 Store embeddings in **FAISS vector store**
-
-- 🤖 **LangGraph chatbot** with memory and context handling
-
-- 🔁 Cookie-based **session tracking**
-
-- 🧹 **Auto-delete PDFs** after processing to save space and protect privacy
-
-- 📡 API endpoints ready for integration with any frontend (React, JS, etc.)
-
----
-
-## 🧠 How It Works
-
-### 1. Upload Phase
-
-- The user uploads a PDF to `/upload_pdf/`
-
-- Text is extracted from the file using `PyPDF2`
-
-- The text is split into overlapping chunks using `RecursiveCharacterTextSplitter`
-
-- Each chunk is embedded using a **HuggingFace** model (`all-mpnet-base-v2`)
-
-- Vectors are stored in a **FAISS** in-memory index
-
-- A unique **LangGraph chatbot** is created per session
-
-### 2. Chat Phase
-
-- User sends messages to `/chat`
-
-- The chatbot retrieves similar chunks from FAISS
-
-- It builds a prompt and uses **Groq's LLaMA-3.3-70B** (via LangGraph) to generate responses
-
-- Memory is preserved between chats using `MemorySaver`
-
-- Session is tracked via **HTTP cookie** (`session_id`)
-
----
-
-## 📁 Project Structure
-
-```
-
-rag_chatbot_fastapi/
-
-├── app/
-
-│ ├── main.py # FastAPI app instance
-
-│ ├── api.py # API routes (upload_pdf, chat)
-
-│ ├── pdf_utils.py # PDF text extraction logic
-
-│ ├── vector_utils.py # Chunking, embedding, FAISS store
-
-│ ├── langgraph_flow.py # LangGraph graph + chatbot creation
-
-├── uploads/ # Temporary PDF upload directory
-
-├── requirements.txt # All required dependencies
-
-├── README.md # You're reading this 😉
-
-```
-
----
-
-## 🔑 Tech Stack
-
-| Purpose            | Tech/Library                                |
-
-|--------------------|---------------------------------------------|
-
-| API framework      | FastAPI                                     |
-
-| PDF parsing        | PyPDF2                                      |
-
-| Text splitting     | LangChain `RecursiveCharacterTextSplitter`  |
-
-| Embeddings         | HuggingFace (`all-mpnet-base-v2`)           |
-
-| Vector store       | FAISS                                       |
-
-| LLM                | Groq's `llama-3.3-70b-versatile` via LangGraph |
-
-| Chat memory        | LangGraph `MemorySaver`                     |
-
-| Session tracking   | FastAPI cookie-based auth                   |
-
----
-
-## 🧪 API Endpoints
-
-### `POST /upload_pdf/`
-
-Upload your PDF and receive a chatbot session ID via HTTP cookie.
-
-```bash
-
-curl -X POST -F "file=@your_resume.pdf" http://localhost:8000/upload_pdf/
-
-```
-
-### `POST /chat`
-
-Send your message. Cookie `session_id` must be included automatically if using a browser.
-
-```
-
-POST /chat
-
-{
-
-  "message": "What is this document about?"
-
-}
-
-```
-
-* * * * *
-
-🧹 Auto Cleanup
-
----------------
-
-Uploaded PDFs are **automatically deleted** from the server after embedding is completed --- ensuring low disk usage and user privacy.
-
-* * * * *
+🤖 RAG-Based Chatbot with FastAPI, LangGraph & PDF Upload
+=========================================================
+
+This project is a **Retrieval-Augmented Generation (RAG) based chatbot** built entirely using **FastAPI** and **LangGraph**, designed to allow users to upload their PDF documents and chat with the content intelligently.
+
+It uses modern tools and libraries such as HuggingFace Transformers for embeddings, FAISS for vector search, LangGraph for agent-based orchestration, and Groq's LLaMA-3.3-70B model for generating accurate and contextual responses.
+
+🚀 Features
+-----------
+
+*   Upload any PDF file
+    
+*   Extract text automatically using PyPDF2
+    
+*   Split and chunk the document using RecursiveCharacterTextSplitter
+    
+*   Generate sentence embeddings using HuggingFace model all-mpnet-base-v2
+    
+*   Store embedded chunks into FAISS vector store
+    
+*   Run a LangGraph-powered chatbot with retrieval and memory
+    
+*   Track sessions using cookies (auto-generated session\_id)
+    
+*   Automatically delete uploaded PDF files after processing
+    
+*   API endpoints are frontend-ready (for use in React or plain HTML apps)
+    
+
+🧠 How the Chatbot Works
+------------------------
+
+### 1\. Upload Phase
+
+*   The user uploads a PDF document through the /upload\_pdf/ endpoint.
+    
+*   The system extracts the raw text using PyPDF2.
+    
+*   Text is split into overlapping chunks using RecursiveCharacterTextSplitter (from LangChain).
+    
+*   Each chunk is embedded using HuggingFaceEmbeddings (sentence-transformers/all-mpnet-base-v2).
+    
+*   FAISS is used to create a vector store from these embeddings.
+    
+*   A new LangGraph chatbot is created with:
+    
+    *   A retriever node to fetch top-k similar chunks
+        
+    *   A generation node powered by **Groq's LLaMA-3.3-70B**
+        
+    *   Memory tracking using MemorySaver
+        
+*   A unique session\_id is returned to the client via an **HTTP cookie**.
+    
+
+### 2\. Chat Phase
+
+*   User sends queries via /chat endpoint.
+    
+*   LangGraph uses the session's retriever to fetch relevant chunks from FAISS.
+    
+*   The context is passed into a custom prompt template.
+    
+*   LLaMA-3.3-70B generates a response.
+    
+*   The session maintains memory via MemorySaver.
+    
+
+📁 Project Structure
+--------------------
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   rag_chatbot_fastapi/  ├── app/  │   ├── main.py             # FastAPI app instance  │   ├── api.py              # Routes for upload_pdf and chat  │   ├── pdf_utils.py        # PDF text extraction logic  │   ├── vector_utils.py     # Text chunking, embedding, FAISS  │   ├── langgraph_flow.py   # LangGraph setup and chatbot creation  ├── uploads/                # Temporary PDF upload folder  ├── requirements.txt        # Python dependencies  ├── README.md               # Project documentation   `
+
+🔑 Tech Stack
+-------------
+
+PurposeLibrary/TechAPI FrameworkFastAPIPDF ParsingPyPDF2Text SplittingRecursiveCharacterTextSplitter (LangChain)EmbeddingsHuggingFace Transformers (all-mpnet-base-v2)Vector StoreFAISSLanguage ModelGroq's LLaMA-3.3-70B via LangGraphMemory TrackingLangGraph MemorySaverSession ManagementFastAPI Cookies
+
+🧪 API Endpoints
+----------------
+
+### POST /upload\_pdf/
+
+Uploads a PDF document and returns a session ID (stored in cookies):
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   curl -X POST -F "file=@resume.pdf" http://localhost:8000/upload_pdf/   `
+
+### POST /chat
+
+Sends a user question to the chatbot:
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   POST /chat  {    "message": "What is the objective of this document?"  }   `
+
+> Note: The session\_id is automatically retrieved from the cookie.
+
+🧹 Auto File Cleanup
+--------------------
+
+To ensure user privacy and reduce storage usage, uploaded PDF files are **automatically deleted** right after they are embedded and stored in FAISS.
 
 🛠️ Setup Instructions
-
 ----------------------
 
-1.  ✅ Clone the repo
+1.  Clone the repository:
+    
 
-2.  🔧 Create a virtual environment
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   git clone https://github.com/yourusername/rag_chatbot_fastapi  cd rag_chatbot_fastapi   `
 
-3.  📦 Install dependencies
+1.  Create a virtual environment:
+    
 
-```
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   python -m venv venv  source venv/bin/activate  # or venv\Scripts\activate on Windows   `
 
-pip install -r requirements.txt
+1.  Install the dependencies:
+    
 
-```
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   pip install -r requirements.txt   `
 
-1.  🔑 Set your Groq API key (you'll need it for LLaMA):
+1.  Set your Groq API Key:
+    
 
-```
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   export GROQ_API_KEY=your_key_here       # For Linux/macOS  set GROQ_API_KEY=your_key_here          # For Windows CMD   `
 
-export GROQ_API_KEY=your_key_here  # Linux/macOS
+1.  Run the server:
+    
 
-set GROQ_API_KEY=your_key_here     # Windows CMD
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   uvicorn main:app --reload   `
 
-```
+1.  Access Swagger UI at:
+    
 
-1.  ▶️ Run the server:
-
-```
-
-uvicorn main:app --reload
-
-```
-
-1.  🔍 Open Swagger docs at:
-
-    `http://127.0.0.1:8000/docs`
-
-* * * * *
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   http://127.0.0.1:8000/docs   `
 
 ✨ Possible Improvements
-
 -----------------------
 
--   Frontend with chat UI and progress bar (React or HTML/JS)
-
--   File size validation (e.g., max 5MB)
-
--   Session timeout and cleanup logic
-
--   Persistent vector DB (e.g., save FAISS to disk)
-
--   RAG evaluation metrics (RAGAS)
-
-* * * * *
+*   Build a React-based frontend with file uploader and chat box
+    
+*   Add file size limits (e.g., 5MB)
+    
+*   Store FAISS vector index on disk (persistence)
+    
+*   Add session expiration logic
+    
+*   Use RAGAS for performance evaluation
+    
 
 🙋‍♂️ Author
-
 ------------
 
-Built with ❤️ by **Alok** -- AI/ML Researcher & Developer
+Built with ❤️ by **Alok**, AI/ML Researcher and Developer.
 
-If you found this useful, feel free to ⭐ the repo or connect!
+If you found this helpful, feel free to ⭐ the repo or reach out and connect!
