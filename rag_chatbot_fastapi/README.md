@@ -69,6 +69,7 @@ It uses modern tools and libraries such as HuggingFace Transformers for embeddin
 ````markdown
 # 📁 Project Structure: `rag_chatbot_fastapi`
 
+```bash
 
 rag_chatbot_fastapi/
 ├── app/
@@ -80,7 +81,7 @@ rag_chatbot_fastapi/
 ├── uploads/                # Temporary PDF upload folder
 ├── requirements.txt        # Python dependencies
 ├── README.md               # Project documentation
-
+````
 
 ---
 
