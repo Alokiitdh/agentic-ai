@@ -182,10 +182,12 @@ uvicorn main:app --reload
 ### 6. Access the Swagger API Docs
 
 Open your browser and go to:
-
-```
+```bash
 http://127.0.0.1:8000/docs
 
+```
+
+---
 
 
 ✨ Possible Improvements
